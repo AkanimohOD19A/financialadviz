@@ -349,10 +349,21 @@ def create_financial_assistant(api_key, docs, dataframes):
 
 
 # Predefined file paths and API key
-API_KEY = st.secrets["COHERE_API_KEY"]  # Fetch API key from environment variable
+# API_KEY = st.secrets["COHERE_API_KEY"]  # Fetch API key from environment variable
 PDF_FILE_PATH = "docs/Re_Data-Analyst-Take-Home-Assessment-_Daniel-AMAH.pdf"  # Replace with your PDF file path
 CSV_FILE_PATH1 = "docs/cleaned_uesr_table.csv"  # Replace with your first CSV file path
 CSV_FILE_PATH2 = "docs/cleaned_transactions_table.csv"  # Replace with your second CSV file path
+
+# Add this to the sidebar section
+with st.sidebar:
+    st.header("Set your Cohere API Key")
+    st.link_button("Get one @ Cohere 🔗", "https://dashboard.cohere.com/api-keys")
+    API_KEY = st.text_input("API Key", type="password", label_visibility="collapsed")
+
+# Validate the API key before proceeding
+if not API_KEY:
+    st.sidebar.error("Please enter your Cohere API key to proceed.")
+    st.stop()  # Stop further execution if the API key is not provided
 
 # Load files internally
 try:
